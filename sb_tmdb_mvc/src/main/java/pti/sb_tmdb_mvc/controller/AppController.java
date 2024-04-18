@@ -19,6 +19,7 @@ public class AppController {
 	public AppController(AppService service) {
 		super();
 		this.service = service;
+		
 	}
 	
 	@GetMapping("/movie/{movieid}")
