@@ -8,5 +8,42 @@
 	
 	<p th:text="${moviedto}"></p>
 	
+	
+	<table th:if="${userdto} != null">
+			<tr>
+				
+				<th>User</th>
+				<th>Movie </th>
+				<th>Movie Id</th>
+				<th>Movie Overview</th>
+			</tr>
+			<tr>
+				<td th:text="${userdto.getName()}"></td>
+				
+				<td>
+					<table>
+						<tr th:each="movieDto : ${userdto.getSeenMovies()}">
+							<td th:text="${movieDto.getOriginalTitle()}"></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tr th:each="movieDto : ${userdto.getSeenMovies()}">
+							<td th:text="${movieDto.getId()}"></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tr th:each="movieDto : ${userdto.getSeenMovies()}">
+							<td th:text="${movieDto.getOverview()}"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<br/>
+		
 	</body>
 </html>

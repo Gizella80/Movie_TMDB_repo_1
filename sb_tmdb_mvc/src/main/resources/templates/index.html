@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+	
+		<p>Search movie by title!</p>
+		<form action="/movie/search" method="get">
+			<input type="text" name="title" placeholder="Movie Title" />
+			<input type="submit" />
+		</form>
+		<br/>
+		<p>Search for User and users seen Movies</p>
+		<p>Insert UserId Here!</p>
+		<form action="/movie/usermovies" method="get">
+			<input type="number" name="userid" placeholder="User Id" />
+			<input type="submit" />
+		</form>
+		
+	</body>
+</html>

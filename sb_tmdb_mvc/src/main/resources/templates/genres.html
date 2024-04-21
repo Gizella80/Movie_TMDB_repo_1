@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+		<meta charset="UTF-8">
+	<title>Insert title here</title>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+			
+			<tr th:each="genreDto : ${genrelistdto.getGenres()}">
+				<td th:text="${genreDto.getId()}"></td>
+				<td th:text="${genreDto.getName()}"></td>
+			</tr>
+		</table>
+		
+	</body>
+</html>
