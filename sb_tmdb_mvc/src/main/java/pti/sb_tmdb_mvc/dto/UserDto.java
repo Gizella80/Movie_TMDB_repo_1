@@ -1,8 +1,6 @@
-package pti.sb_tmdb_mvc.model;
+package pti.sb_tmdb_mvc.dto;
 
 import java.util.List;
-
-import pti.sb_tmdb_mvc.dto.MovieDto;
 
 public class UserDto {
 	

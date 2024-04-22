@@ -11,12 +11,13 @@ import pti.sb_tmdb_mvc.db.Database;
 import pti.sb_tmdb_mvc.dto.GenreDto;
 import pti.sb_tmdb_mvc.dto.GenreListDto;
 import pti.sb_tmdb_mvc.dto.MovieDto;
+import pti.sb_tmdb_mvc.dto.MovieListDto;
+import pti.sb_tmdb_mvc.dto.UserDto;
 import pti.sb_tmdb_mvc.model.Genre;
 import pti.sb_tmdb_mvc.model.Movie;
 import pti.sb_tmdb_mvc.model.TMDBGenreResult;
 import pti.sb_tmdb_mvc.model.TMDBMovieResult;
 import pti.sb_tmdb_mvc.model.User;
-import pti.sb_tmdb_mvc.model.UserDto;
 
 @Service
 public class AppService {
@@ -136,6 +137,65 @@ public class AppService {
 
 		
 		
+		return userDto;
+	}
+
+	public MovieListDto getFirstTenMovieByTitle(String mTitle) {
+	
+		
+		
+		
+		RestTemplate rt = new RestTemplate();
+		TMDBMovieResult movieResult = rt.getForObject(
+				"https://api.themoviedb.org/3/search/movie?query=" + 
+						mTitle + "&api_key=c1fa0cf3eda97ff6dbd2a15bf9e29f75",
+				TMDBMovieResult.class);
+		
+		List<MovieDto> movieList = new ArrayList<>();
+		MovieDto movieDto = null;
+		List<Movie> movies = movieResult.getResults();
+		Movie movie = null;
+		
+		if(movies.size() > 0) {
+			
+			if(movies.size() < 10) {
+				for(int index = 0; index < movies.size(); index++) {
+					movie = movieResult.getResults().get(index);
+					movieDto = convertMovieToMovieDto(movie);
+					movieList.add(movieDto);
+				}
+				
+			}else {
+				
+				for(int index = 0; index < 10; index++) {
+					movie = movieResult.getResults().get(index);
+					movieDto = convertMovieToMovieDto(movie);
+					movieList.add(movieDto);
+				}
+				
+			}
+			
+		}
+		MovieListDto movieListDto = new MovieListDto(movieList);
+
+		return movieListDto;
+	}
+
+	public UserDto mergeUserById(int userId, int movieId) {
+		
+		UserDto userDto = getUserById(userId);
+	
+		MovieDto movieDto = getMovieById(movieId);
+		
+		userDto.getSeenMovies().add(movieDto);
+		
+		
+		
+		db.mergeSeenMovies(userId,movieId);
+		
+		userDto = getUserById(userId);
+		
+	
 		return userDto;
 	}
 	

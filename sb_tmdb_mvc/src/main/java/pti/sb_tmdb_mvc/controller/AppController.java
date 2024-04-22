@@ -1,15 +1,19 @@
 package pti.sb_tmdb_mvc.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pti.sb_tmdb_mvc.dto.GenreListDto;
 import pti.sb_tmdb_mvc.dto.MovieDto;
-import pti.sb_tmdb_mvc.model.UserDto;
+import pti.sb_tmdb_mvc.dto.MovieListDto;
+import pti.sb_tmdb_mvc.dto.UserDto;
 import pti.sb_tmdb_mvc.service.AppService;
 
 
@@ -78,4 +82,36 @@ public class AppController {
 		
 		return "movie.html";
 	}
+	
+	@PostMapping("/movie/savemovie")
+	public String persistMovie(Model model,
+			@RequestParam("userid") int userId,
+			@RequestParam("movie") String mTitle) {
+		
+		
+		
+		MovieListDto movieListDto = service.getFirstTenMovieByTitle(mTitle);
+		
+		ArrayList<String> movielist = new ArrayList<>();
+		
+		if(movieListDto != null) {
+			
+		for(int i =1; i < movieListDto.getMovieDtos().size(); i++) {
+			movielist.add(movieListDto.getMovieDtos().get(i).getOriginalTitle());
+			
+			}
+		
+		MovieDto movieDto = service.getMovieByTitle(mTitle);
+		int movieId= movieDto.getId();
+	
+		UserDto userDto = service.mergeUserById(userId,movieId);
+		
+		model.addAttribute("movielist", movielist);
+		model.addAttribute("userdto", userDto);
+		
+	
+		}
+			return "movie.html";
+	}
+	
 }
