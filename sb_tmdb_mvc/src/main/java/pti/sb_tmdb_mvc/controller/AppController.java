@@ -83,35 +83,47 @@ public class AppController {
 		return "movie.html";
 	}
 	
-	@PostMapping("/movie/savemovie")
+	@GetMapping("/movie/getmovielist")
 	public String persistMovie(Model model,
-			@RequestParam("userid") int userId,
+		
 			@RequestParam("movie") String mTitle) {
 		
 		
 		
 		MovieListDto movieListDto = service.getFirstTenMovieByTitle(mTitle);
 		
-		ArrayList<String> movielist = new ArrayList<>();
+		model.addAttribute("movielistdto", movieListDto);
 		
-		if(movieListDto != null) {
-			
-		for(int i =1; i < movieListDto.getMovieDtos().size(); i++) {
-			movielist.add(movieListDto.getMovieDtos().get(i).getOriginalTitle());
-			
-			}
+		return "movie.html";
+	}
 		
-		MovieDto movieDto = service.getMovieByTitle(mTitle);
-		int movieId= movieDto.getId();
-	
-		UserDto userDto = service.mergeUserById(userId,movieId);
+	@PostMapping("/movie/savemovie")
+	public String persistMovie(
+			Model model,
+			@RequestParam("userid") int userId,
+			@RequestParam("movieid") int movieId) {
 		
-		model.addAttribute("movielist", movielist);
+		UserDto userDto = service.mergeUserById(userId, movieId);
+		
 		model.addAttribute("userdto", userDto);
 		
-	
-		}
-			return "movie.html";
+		return "movie.html";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

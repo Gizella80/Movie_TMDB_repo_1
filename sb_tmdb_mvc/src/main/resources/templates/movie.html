@@ -24,27 +24,26 @@
 					<table>
 						<tr th:each="movieDto : ${userdto.getSeenMovies()}">
 							<td th:text="${movieDto.getOriginalTitle()}"></td>
-						</tr>
-					</table>
-				</td>
-				<td>
-					<table>
-						<tr th:each="movieDto : ${userdto.getSeenMovies()}">
 							<td th:text="${movieDto.getId()}"></td>
-						</tr>
-					</table>
-				</td>
-				<td>
-					<table>
-						<tr th:each="movieDto : ${userdto.getSeenMovies()}">
 							<td th:text="${movieDto.getOverview()}"></td>
 						</tr>
 					</table>
 				</td>
+				
 			</tr>
 		</table>
 		<br/>
 		
+		<form th:if = "${movielistdto} != null " action = "/movie/savemovie" method = "post">
+			<input type = "number" name ="userid" />
+			<select name ="movieid" >
+			
+				<option th:each = " movieDto : ${movielistdto.getMovieDtos()}" th:text = "${movieDto.getOriginalTitle()}"
+					th:value ="${movieDto.getId()}"/>
+				
+			</select>
+			<input type = "submit"/>
+		</form>
 		
 		
 	</body>

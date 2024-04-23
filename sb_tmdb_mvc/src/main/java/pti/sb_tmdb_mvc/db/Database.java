@@ -71,9 +71,10 @@ public class Database {
 		Transaction tx = session.beginTransaction();
 		
 		
-		MutationQuery query =
-				session.createMutationQuery("INSERT INTO seenmovies (userid , tmdbmovieid)  VALUES (userId,movieId)");
-				
+		NativeQuery query =
+				session.createNativeQuery("INSERT INTO seenmovies (userid , tmdbmovieid)  VALUES (?1,?2)",Object[].class);
+				query.setParameter(1, userId);
+				query.setParameter(2, movieId);
 				query.executeUpdate();
 		
 		tx.commit();

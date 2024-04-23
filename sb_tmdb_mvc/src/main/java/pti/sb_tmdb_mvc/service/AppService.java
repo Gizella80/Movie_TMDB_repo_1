@@ -193,7 +193,7 @@ public class AppService {
 		
 		db.mergeSeenMovies(userId,movieId);
 		
-		userDto = getUserById(userId);
+		
 		
 	
 		return userDto;
