@@ -1,7 +1,5 @@
 package pti.sb_tmdb_mvc.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pti.sb_tmdb_mvc.dto.GenreListDto;
 import pti.sb_tmdb_mvc.dto.MovieDto;
 import pti.sb_tmdb_mvc.dto.MovieListDto;
+import pti.sb_tmdb_mvc.dto.ReleasedMovieDto;
 import pti.sb_tmdb_mvc.dto.UserDto;
 import pti.sb_tmdb_mvc.service.AppService;
 
@@ -112,7 +111,16 @@ public class AppController {
 	
 	
 	
-	
+	@GetMapping("/movie/releases")
+	public String showMovieRelese(Model model,
+			@RequestParam("movieid") int movieId)
+			 {
+		ReleasedMovieDto releasedMovieDto = service.getReleaseResult(movieId);
+		
+		model.addAttribute("releasedmoviedto", releasedMovieDto);
+		
+		return "releases.html";
+	}
 	
 	
 	

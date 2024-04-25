@@ -8,40 +8,36 @@ public class ReleasedMovieDto {
 	
 	
 		private int movieId;
-		private List<CountryResultDto> results;
+		private List<CountryResultDto> countryResultDtoList;
 		
-		
-		public ReleasedMovieDto(int movieId, List<CountryResultDto> results) {
+		public ReleasedMovieDto(int movieId, List<CountryResultDto> countryResultDtoList) {
 			super();
 			this.movieId = movieId;
-			this.results = results;
+			this.countryResultDtoList = countryResultDtoList;
 		}
-
-
+		
 		public int getMovieId() {
 			return movieId;
 		}
-
-
+		
 		public void setMovieId(int movieId) {
 			this.movieId = movieId;
 		}
-
-
-		public List<CountryResultDto> getResults() {
-			return results;
+		
+		public List<CountryResultDto> getCountryResultDtoList() {
+			return countryResultDtoList;
 		}
-
-
-		public void setResults(List<CountryResultDto> results) {
-			this.results = results;
+		
+		public void setCountryResultDtoList(List<CountryResultDto> countryResultDtoList) {
+			this.countryResultDtoList = countryResultDtoList;
 		}
-
-
+		
 		@Override
 		public String toString() {
-			return "ReleasedMovieDto [movieId=" + movieId + ", results=" + results + "]";
+			return "ReleasedMovieDto [movieId=" + movieId + ", countryResultDtoList=" + countryResultDtoList + "]";
 		}
+		
+		
 		
 		
 }

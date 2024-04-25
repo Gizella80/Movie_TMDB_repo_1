@@ -7,32 +7,39 @@ import java.util.List;
 public class CountryResultDto {
 
 	
-	private String iso_31_66_1;
-	private List<ReleaseResultDto> release_dates;
+	private String countryCode;
+	private List<ReleaseResultDto> releaseResultDtoList;
 	
-	
-	
-	public CountryResultDto(String iso_31_66_1, List<ReleaseResultDto> release_dates) {
+	public CountryResultDto(String countryCode, List<ReleaseResultDto> releaseResultDtoList) {
 		super();
-		this.iso_31_66_1 = iso_31_66_1;
-		this.release_dates = release_dates;
+		this.countryCode = countryCode;
+		this.releaseResultDtoList = releaseResultDtoList;
 	}
-	public String getIso_31_66_1() {
-		return iso_31_66_1;
+
+	public String getCountryCode() {
+		return countryCode;
 	}
-	public void setIso_31_66_1(String iso_31_66_1) {
-		this.iso_31_66_1 = iso_31_66_1;
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
-	public List<ReleaseResultDto> getRelease_dates() {
-		return release_dates;
+
+	public List<ReleaseResultDto> getReleaseResultDtoList() {
+		return releaseResultDtoList;
 	}
-	public void setRelease_dates(List<ReleaseResultDto> release_dates) {
-		this.release_dates = release_dates;
+
+	public void setReleaseResultDtoList(List<ReleaseResultDto> releaseResultDtoList) {
+		this.releaseResultDtoList = releaseResultDtoList;
 	}
+
 	@Override
 	public String toString() {
-		return "CountryListDto [iso_31_66_1=" + iso_31_66_1 + ", release_dates=" + release_dates + "]";
+		return "CountryResultDto [countryCode=" + countryCode + ", releaseResultDtoList=" + releaseResultDtoList + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import pti.sb_tmdb_mvc.db.Database;
+import pti.sb_tmdb_mvc.dto.CountryResultDto;
 import pti.sb_tmdb_mvc.dto.GenreDto;
 import pti.sb_tmdb_mvc.dto.GenreListDto;
 import pti.sb_tmdb_mvc.dto.MovieDto;
 import pti.sb_tmdb_mvc.dto.MovieListDto;
+import pti.sb_tmdb_mvc.dto.ReleaseResultDto;
+import pti.sb_tmdb_mvc.dto.ReleasedMovieDto;
 import pti.sb_tmdb_mvc.dto.UserDto;
+import pti.sb_tmdb_mvc.model.CountryResult;
 import pti.sb_tmdb_mvc.model.Genre;
 import pti.sb_tmdb_mvc.model.Movie;
+import pti.sb_tmdb_mvc.model.ReleaseResult;
+import pti.sb_tmdb_mvc.model.ReleasedMovie;
 import pti.sb_tmdb_mvc.model.TMDBGenreResult;
 import pti.sb_tmdb_mvc.model.TMDBMovieResult;
 import pti.sb_tmdb_mvc.model.User;
@@ -135,8 +141,6 @@ public class AppService {
 				movieDtos);
 
 
-		
-		
 		return userDto;
 	}
 
@@ -184,19 +188,59 @@ public class AppService {
 	public UserDto mergeUserById(int userId, int movieId) {
 		
 		UserDto userDto = getUserById(userId);
-	
 		MovieDto movieDto = getMovieById(movieId);
 		
 		userDto.getSeenMovies().add(movieDto);
 		
-		
-		
 		db.mergeSeenMovies(userId,movieId);
-		
-		
-		
 	
 		return userDto;
+	}
+
+	public ReleasedMovieDto getReleaseResult(int movieId) {
+
+		ReleasedMovieDto releasedMovieDto = null;
+		
+		RestTemplate rt = new RestTemplate();
+		ReleasedMovie rm= rt.getForObject(
+				"https://api.themoviedb.org/3/movie/" + movieId + "/release_dates?api_key=c1fa0cf3eda97ff6dbd2a15bf9e29f75",
+						ReleasedMovie.class);
+		
+		List<CountryResult> countryResultList = rm.getResults();
+		List<CountryResultDto> countryResultDtoList = new ArrayList<>();
+		for(int index_coutryResultList = 0 ; index_coutryResultList < countryResultList.size(); index_coutryResultList ++) {
+			
+		 
+			CountryResult currentCountryResult = countryResultList.get( index_coutryResultList);
+			
+			
+			List<ReleaseResult> releseResultList =  currentCountryResult.getRelease_dates();
+			List<ReleaseResultDto> releaseResultDtoList = new ArrayList<>();
+			
+			for(int index_releaseResultList = 0; index_releaseResultList < releseResultList .size(); index_releaseResultList++) {
+				
+				ReleaseResult releaseResult =  releseResultList.get(index_releaseResultList);
+				
+				ReleaseResultDto releaseResultDto = new ReleaseResultDto(
+						releaseResult.getRelease_date(),
+						releaseResult.getType()
+						);
+				releaseResultDtoList.add(releaseResultDto);
+			
+			}
+			
+			CountryResultDto countryResultDto = new CountryResultDto( 
+					currentCountryResult.getIso_31_66_1(),
+					releaseResultDtoList);
+			
+			countryResultDtoList.add(countryResultDto);
+		}
+		
+		releasedMovieDto = new ReleasedMovieDto(
+				movieId,
+				countryResultDtoList);
+		
+		return releasedMovieDto;
 	}
 	
 	
